@@ -40,9 +40,9 @@
 		04F795F5A570DC946580BF32 /* Pods_RNBaseController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RNBaseController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C04445954C6CEF10EFAA98E /* Pods-RNBaseController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBaseController_Example.release.xcconfig"; path = "Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example.release.xcconfig"; sourceTree = "<group>"; };
 		1D821C9C73837829BF02D17B /* Pods-RNBaseController_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBaseController_Tests.debug.xcconfig"; path = "Target Support Files/Pods-RNBaseController_Tests/Pods-RNBaseController_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		2A409DB342284A7CDC54C0C4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		2A409DB342284A7CDC54C0C4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		507A8BCE43B875D19DA99180 /* Pods-RNBaseController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBaseController_Example.debug.xcconfig"; path = "Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		512B79ED3426F00316C6BB97 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		512B79ED3426F00316C6BB97 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* RNBaseController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNBaseController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -66,7 +66,7 @@
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A6BB9B65281DCCE316767EB2 /* Pods_RNBaseController_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RNBaseController_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCAAA8E2B129321F3C9A97D2 /* Pods-RNBaseController_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBaseController_Tests.release.xcconfig"; path = "Target Support Files/Pods-RNBaseController_Tests/Pods-RNBaseController_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		D9AC1D5B8917323AA4FEBCDE /* RNBaseController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = RNBaseController.podspec; path = ../RNBaseController.podspec; sourceTree = "<group>"; };
+		D9AC1D5B8917323AA4FEBCDE /* RNBaseController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RNBaseController.podspec; path = ../RNBaseController.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,7 +193,6 @@
 				1D821C9C73837829BF02D17B /* Pods-RNBaseController_Tests.debug.xcconfig */,
 				CCAAA8E2B129321F3C9A97D2 /* Pods-RNBaseController_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -258,6 +257,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -302,11 +302,21 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework",
+				"${BUILT_PRODUCTS_DIR}/Folly/folly.framework",
 				"${BUILT_PRODUCTS_DIR}/RNBaseController/RNBaseController.framework",
+				"${BUILT_PRODUCTS_DIR}/React/jsi.framework",
+				"${BUILT_PRODUCTS_DIR}/Yoga/yoga.framework",
+				"${BUILT_PRODUCTS_DIR}/glog/glog.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DoubleConversion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/folly.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNBaseController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/jsi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
