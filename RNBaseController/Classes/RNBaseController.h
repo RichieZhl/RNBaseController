@@ -11,6 +11,8 @@
 
 @property (nonatomic, assign) BOOL needsCache; // 本地缓存
 
+@property (nonatomic, assign) BOOL isSupportScanGun; // 是否支持扫码枪
+
 @property (nonatomic, copy, readonly) NSString *uri; // 模块标记
 
 @property (nonatomic, strong, readonly) NSDictionary *p; // 传入的属性

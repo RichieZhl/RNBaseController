@@ -6,9 +6,9 @@
 //
 
 #import "RNBaseController.h"
-#import "RCTBundleURLProvider.h"
-#import "RCTRootView.h"
-#import "RCTConvert.h"
+#import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
+#import <React/RCTConvert.h>
 
 @interface RNBaseController ()
 
@@ -38,6 +38,7 @@
         
         self.uri = uri;
         self.moduleName = moduleName;
+        self.isSupportScanGun = NO;
         self.finalUrl = local ? [self baseURL] : [self finalUrlWith:url];
         self.p = [self loadPropertiesWith:properties];
         if (local) {
@@ -60,6 +61,7 @@
         
         self.moduleName = moduleName;
         self.finalUrl = [self finalUrlWith:url];
+        self.isSupportScanGun = NO;
         self.p = [self loadPropertiesWith:properties];
         self.launchOptions = launchOptions;
     }
@@ -152,6 +154,9 @@
 }
 
 - (NSArray *)keyCommands {
+    if (!self.isSupportScanGun) {
+        return [super keyCommands];
+    }
     NSMutableArray *array = [NSMutableArray array];
     [array addObject:[UIKeyCommand keyCommandWithInput:@"\r" modifierFlags:0 action:@selector(_handler)]];
     for (int i = 48; i < 58; ++i) {//0..9
