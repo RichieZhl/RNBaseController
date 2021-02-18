@@ -23,6 +23,9 @@ source 'https://github.com/CocoaPods/Specs.git'
   s.author           = { 'richiezhl' => 'lylaut@163.com' }
   s.source           = { :git => 'https://github.com/richiezhl/RNBaseController.git', :tag => s.version.to_s }
 
+  s.xcconfig = { 'OTHER_LDFLAGS' => '-ObjC', 'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES',
+      'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 arm64' }
+  
   s.ios.deployment_target = '10.0'
   
   s.pod_target_xcconfig = { "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/React\"" }
