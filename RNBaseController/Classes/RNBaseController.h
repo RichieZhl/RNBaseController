@@ -40,6 +40,8 @@
 /// @param properties 初始化传入的属性
 - (NSDictionary *)loadPropertiesWith:(NSDictionary *)properties;
 
+- (NSURL *)baseURL;
+
 ///  隐藏loading页
 - (void)hideLoadingView;
 
