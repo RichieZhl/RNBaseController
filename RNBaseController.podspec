@@ -23,7 +23,7 @@ React Native 基础控制器
   s.xcconfig = { 'OTHER_LDFLAGS' => '-ObjC', 'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES',
       'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 arm64' }
   
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '12.4'
   
   s.pod_target_xcconfig = { "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/boost\" \"$(PODS_ROOT)/RCT-Folly\" \"$(PODS_ROOT)/DoubleConversion\" \"$(PODS_ROOT)/React\"  \"$(PODS_ROOT)/React/ReactCommon\" \"$(PODS_ROOT)/React/React\"",
       "CLANG_CXX_LANGUAGE_STANDARD" => "c++17" }
