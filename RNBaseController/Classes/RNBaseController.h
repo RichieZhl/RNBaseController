@@ -38,12 +38,9 @@
 
 ///  固定属性增加
 /// @param properties 初始化传入的属性
-- (NSDictionary *)loadPropertiesWith:(NSDictionary *)properties;
+- (void)setCommonPropertiesWith:(NSMutableDictionary *)properties;
 
 - (NSURL *)baseURL;
-
-///  隐藏loading页
-- (void)hideLoadingView;
 
 /// 本地缓存路径
 /// @param url 远程URL
@@ -52,8 +49,5 @@
 /// 本地缓存是否存在
 /// @param url 远程URL
 - (BOOL)rnlocalPathExsit:(NSURL *)url;
-
-/// loading页设置
-- (UIView *)rctLoadingView;
 
 @end

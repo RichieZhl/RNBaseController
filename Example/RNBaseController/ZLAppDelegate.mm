@@ -7,12 +7,14 @@
 //
 
 #import "ZLAppDelegate.h"
+#import <React/RCTAppSetupUtils.h>
 
 @implementation ZLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    RCTAppSetupPrepareApp(application);
     return YES;
 }
 

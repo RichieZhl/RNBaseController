@@ -8,14 +8,11 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RNBaseController'
-  s.version          = '0.1.1'
+  s.version          = '0.2.0'
   s.summary          = 'React Native 基础控制器'
 
   s.description      = <<-DESC
 React Native 基础控制器
-在 Pofile里加入以下代码
-source 'https://github.com/RichieZhl/Spec.git'
-source 'https://github.com/CocoaPods/Specs.git'
                        DESC
 
   s.homepage         = 'https://github.com/richiezhl/RNBaseController'
@@ -28,7 +25,8 @@ source 'https://github.com/CocoaPods/Specs.git'
   
   s.ios.deployment_target = '10.0'
   
-  s.pod_target_xcconfig = { "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/React\"" }
+  s.pod_target_xcconfig = { "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/boost\" \"$(PODS_ROOT)/RCT-Folly\" \"$(PODS_ROOT)/DoubleConversion\" \"$(PODS_ROOT)/React\"  \"$(PODS_ROOT)/React/ReactCommon\" \"$(PODS_ROOT)/React/React\"",
+      "CLANG_CXX_LANGUAGE_STANDARD" => "c++17" }
   s.user_target_xcconfig = { "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/React\"" }
     
   s.source_files = 'RNBaseController/Classes/*.{h,m,mm}'

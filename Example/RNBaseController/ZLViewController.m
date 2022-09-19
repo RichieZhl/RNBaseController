@@ -22,12 +22,6 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-}
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -38,7 +32,8 @@
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesEnded:touches withEvent:event];
     RNBaseController *viewController = [[RNBaseController alloc] initWithUri:@"main" url:[NSURL URLWithString: @"http://0.0.0.0:8081/index.bundle?platform=ios&dev=true&minify=false"] moduleName:@"AwesomeProject" properties:nil useLocal:NO];
-    [self.navigationController pushViewController:viewController animated:YES];
+    viewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    [self presentViewController:viewController animated:YES completion:nil];
 }
 
 @end

@@ -6,11 +6,30 @@
 //
 
 #import "RNBaseController.h"
+#import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <React/RCTConvert.h>
 
-@interface RNBaseController ()
+#import <React/RCTAppSetupUtils.h>
+
+#import <React/CoreModulesPlugins.h>
+#import "RCTCxxBridgeDelegate.h"
+#import <React/RCTFabricSurfaceHostingProxyRootView.h>
+#import <React/RCTSurfacePresenter.h>
+#import <React/RCTSurfacePresenterBridgeAdapter.h>
+#import <ReactCommon/RCTTurboModuleManager.h>
+
+#import <react/config/ReactNativeConfig.h>
+
+static NSString *const kRNConcurrentRoot = @"concurrentRoot";
+
+@interface RNBaseController () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {
+    RCTTurboModuleManager *_turboModuleManager;
+    RCTSurfacePresenterBridgeAdapter *_bridgeAdapter;
+    std::shared_ptr<const facebook::react::ReactNativeConfig> _reactNativeConfig;
+    facebook::react::ContextContainer::Shared _contextContainer;
+}
 
 @property (nonatomic, strong) NSMutableString *resultString;
 
@@ -33,14 +52,13 @@
 #pragma mark - init
 - (instancetype)initWithUri:(NSString *)uri url:(NSURL *)url moduleName:(NSString *)moduleName properties:(NSDictionary *)properties useLocal:(BOOL)local {
     if (self = [self initWithNibName:nil bundle:nil]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"RCTJavaScriptDidFailToLoadNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sourceLoadSuccess:) name:RCTBridgeDidDownloadScriptNotification object:nil];
         
         self.uri = uri;
         self.moduleName = moduleName;
         self.isSupportScanGun = NO;
         self.finalUrl = local ? [self baseURL] : [self finalUrlWith:url];
-        self.p = [self loadPropertiesWith:properties];
+        self.p = [self privateLoadPropertiesWith:properties];
         if (local) {
             if (self.p == NULL) {
                 self.p = @{@"remote": url};
@@ -56,13 +74,12 @@
 
 - (instancetype)initWitUrl:(NSURL *)url moduleName:(NSString *)moduleName properties:(NSDictionary *)properties launchOptions:(NSDictionary *)launchOptions {
     if (self = [self initWithNibName:nil bundle:nil]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"RCTJavaScriptDidFailToLoadNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sourceLoadSuccess:) name:RCTBridgeDidDownloadScriptNotification object:nil];
         
         self.moduleName = moduleName;
         self.finalUrl = [self finalUrlWith:url];
         self.isSupportScanGun = NO;
-        self.p = [self loadPropertiesWith:properties];
+        self.p = [self privateLoadPropertiesWith:properties];
         self.launchOptions = launchOptions;
     }
     return self;
@@ -96,22 +113,30 @@
     return NO;
 }
 
-- (void)handleNotification:(NSNotification *)notif {
-    if ([NSThread isMainThread]) {
-        [self hideLoadingView];
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self hideLoadingView];
-        });
-    }
-}
-
-- (void)hideLoadingView {
+- (void)setCommonPropertiesWith:(NSMutableDictionary *)properties {
     
 }
 
-- (NSDictionary *)loadPropertiesWith:(NSDictionary *)properties {
-    return properties;
+- (NSMutableDictionary *)privateLoadPropertiesWith:(NSDictionary *)properties {
+    NSMutableDictionary *res = nil;
+    if ([properties isKindOfClass:[NSMutableDictionary class]]) {
+        res = (NSMutableDictionary *)properties;
+    } else if ([properties isKindOfClass:[NSDictionary class]]) {
+        res = [properties mutableCopy];
+    } else {
+        res = [NSMutableDictionary dictionary];
+    }
+    
+    // This method controls whether the `concurrentRoot`feature of React18 is turned on or off.
+    ///
+    /// @see: https://reactjs.org/blog/2022/03/29/react-v18.html
+    /// @note: This requires to be rendering on Fabric (i.e. on the New Architecture).
+    /// @return: `true` if the `concurrentRoot` feture is enabled. Otherwise, it returns `false`.
+    res[kRNConcurrentRoot] = @(YES);
+    
+    [self setCommonPropertiesWith:res];
+    
+    return res;
 }
 
 - (void)sourceLoadSuccess:(NSNotification *)notif {
@@ -130,15 +155,23 @@
     }
 }
 
-- (UIView *)rctLoadingView {
-    return nil;
-}
-
 - (void)loadView {
-    RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:self.finalUrl moduleName:self.moduleName initialProperties:self.p launchOptions:self.launchOptions];
-    rootView.loadingView = [self rctLoadingView];
+    RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:self.launchOptions];
+    _contextContainer = std::make_shared<facebook::react::ContextContainer const>();
+    _reactNativeConfig = std::make_shared<facebook::react::EmptyReactNativeConfig const>();
+    _contextContainer->insert("ReactNativeConfig", _reactNativeConfig);
+    _bridgeAdapter = [[RCTSurfacePresenterBridgeAdapter alloc] initWithBridge:bridge contextContainer:_contextContainer];
+    bridge.surfacePresenter = _bridgeAdapter.surfacePresenter;
+    
+    UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"AwesomeProject", self.p);
+
+    if (@available(iOS 13.0, *)) {
+      rootView.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+      rootView.backgroundColor = [UIColor whiteColor];
+    }
     self.view = rootView;
-    self.bridge = rootView.bridge;
+    self.bridge = bridge;
 }
 
 - (NSMutableString *)resultString {
@@ -187,6 +220,48 @@
     _launchOptions = nil;
     _moduleName = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    _bridgeAdapter = nil;
+    _turboModuleManager = nil;
+    _turboModuleManager = nil;
+    _contextContainer.reset();
+    _reactNativeConfig.reset();
+}
+
+#pragma mark RCTCxxBridgeDelegate
+- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge {
+    if (self.finalUrl == nil) {
+        return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
+    }
+    return self.finalUrl;
+}
+
+- (std::unique_ptr<facebook::react::JSExecutorFactory>)jsExecutorFactoryForBridge:(RCTBridge *)bridge {
+  _turboModuleManager = [[RCTTurboModuleManager alloc] initWithBridge:bridge
+                                                             delegate:self
+                                                            jsInvoker:bridge.jsCallInvoker];
+  return RCTAppSetupDefaultJsExecutorFactory(bridge, _turboModuleManager);
+}
+
+#pragma mark RCTTurboModuleManagerDelegate
+
+- (Class)getModuleClassFromName:(const char *)name {
+  return RCTCoreModulesClassProvider(name);
+}
+
+- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const std::string &)name
+                                                      jsInvoker:(std::shared_ptr<facebook::react::CallInvoker>)jsInvoker {
+  return nullptr;
+}
+
+- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const std::string &)name
+                                                     initParams:
+                                                         (const facebook::react::ObjCTurboModule::InitParams &)params {
+  return nullptr;
+}
+
+- (id<RCTTurboModule>)getModuleInstanceFromClass:(Class)moduleClass {
+  return RCTAppSetupDefaultModuleFromClass(moduleClass);
 }
 
 @end

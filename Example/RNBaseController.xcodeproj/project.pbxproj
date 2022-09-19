@@ -3,16 +3,20 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4355F1E928D4652000D7DA2C /* hermes.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4355F1E828D4652000D7DA2C /* hermes.xcframework */; };
+		4355F1EA28D4652000D7DA2C /* hermes.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4355F1E828D4652000D7DA2C /* hermes.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		43B88FEB28D804AB000873D4 /* RNAres.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43B88FE928D804AB000873D4 /* RNAres.mm */; };
+		571B02FD10D7CF546726A39A /* libPods-RNBaseController_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88355E4677EAE6C6F0F1DAA0 /* libPods-RNBaseController_Tests.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
-		6003F59E195388D20070C39A /* ZLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* ZLAppDelegate.m */; };
+		6003F59E195388D20070C39A /* ZLAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* ZLAppDelegate.mm */; };
 		6003F5A7195388D20070C39A /* ZLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* ZLViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
@@ -22,8 +26,7 @@
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		ADCD9B3FE634FF1AD899571D /* Pods_RNBaseController_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BB9B65281DCCE316767EB2 /* Pods_RNBaseController_Tests.framework */; };
-		CC63C6D85A2415156E869BCA /* Pods_RNBaseController_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F795F5A570DC946580BF32 /* Pods_RNBaseController_Example.framework */; };
+		BAEE40146E62274454AC2CF7 /* libPods-RNBaseController_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC86FCC9CB7A0AD91129A992 /* libPods-RNBaseController_Example.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,11 +39,28 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4355F1EB28D4652100D7DA2C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4355F1EA28D4652000D7DA2C /* hermes.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		04F795F5A570DC946580BF32 /* Pods_RNBaseController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RNBaseController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C04445954C6CEF10EFAA98E /* Pods-RNBaseController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBaseController_Example.release.xcconfig"; path = "Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example.release.xcconfig"; sourceTree = "<group>"; };
 		1D821C9C73837829BF02D17B /* Pods-RNBaseController_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBaseController_Tests.debug.xcconfig"; path = "Target Support Files/Pods-RNBaseController_Tests/Pods-RNBaseController_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		2A409DB342284A7CDC54C0C4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		4355F1E828D4652000D7DA2C /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
+		43B88FE928D804AB000873D4 /* RNAres.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNAres.mm; sourceTree = "<group>"; };
+		43B88FEA28D804AB000873D4 /* RNAres.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNAres.h; sourceTree = "<group>"; };
+		43B88FEC28D80BD6000873D4 /* react_native_pods.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; name = react_native_pods.rb; path = ../react_native_pods.rb; sourceTree = "<group>"; };
 		507A8BCE43B875D19DA99180 /* Pods-RNBaseController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBaseController_Example.debug.xcconfig"; path = "Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		512B79ED3426F00316C6BB97 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* RNBaseController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNBaseController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,7 +72,7 @@
 		6003F599195388D20070C39A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6003F59B195388D20070C39A /* RNBaseController-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNBaseController-Prefix.pch"; sourceTree = "<group>"; };
 		6003F59C195388D20070C39A /* ZLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZLAppDelegate.h; sourceTree = "<group>"; };
-		6003F59D195388D20070C39A /* ZLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZLAppDelegate.m; sourceTree = "<group>"; };
+		6003F59D195388D20070C39A /* ZLAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ZLAppDelegate.mm; sourceTree = "<group>"; };
 		6003F5A5195388D20070C39A /* ZLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZLViewController.h; sourceTree = "<group>"; };
 		6003F5A6195388D20070C39A /* ZLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZLViewController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -64,9 +84,10 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A6BB9B65281DCCE316767EB2 /* Pods_RNBaseController_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RNBaseController_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		88355E4677EAE6C6F0F1DAA0 /* libPods-RNBaseController_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNBaseController_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCAAA8E2B129321F3C9A97D2 /* Pods-RNBaseController_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBaseController_Tests.release.xcconfig"; path = "Target Support Files/Pods-RNBaseController_Tests/Pods-RNBaseController_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D9AC1D5B8917323AA4FEBCDE /* RNBaseController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RNBaseController.podspec; path = ../RNBaseController.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		DC86FCC9CB7A0AD91129A992 /* libPods-RNBaseController_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNBaseController_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +98,8 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				CC63C6D85A2415156E869BCA /* Pods_RNBaseController_Example.framework in Frameworks */,
+				BAEE40146E62274454AC2CF7 /* libPods-RNBaseController_Example.a in Frameworks */,
+				4355F1E928D4652000D7DA2C /* hermes.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +110,7 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				ADCD9B3FE634FF1AD899571D /* Pods_RNBaseController_Tests.framework in Frameworks */,
+				571B02FD10D7CF546726A39A /* libPods-RNBaseController_Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,12 +141,13 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4355F1E828D4652000D7DA2C /* hermes.xcframework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				04F795F5A570DC946580BF32 /* Pods_RNBaseController_Example.framework */,
-				A6BB9B65281DCCE316767EB2 /* Pods_RNBaseController_Tests.framework */,
+				DC86FCC9CB7A0AD91129A992 /* libPods-RNBaseController_Example.a */,
+				88355E4677EAE6C6F0F1DAA0 /* libPods-RNBaseController_Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -133,7 +156,9 @@
 			isa = PBXGroup;
 			children = (
 				6003F59C195388D20070C39A /* ZLAppDelegate.h */,
-				6003F59D195388D20070C39A /* ZLAppDelegate.m */,
+				6003F59D195388D20070C39A /* ZLAppDelegate.mm */,
+				43B88FEA28D804AB000873D4 /* RNAres.h */,
+				43B88FE928D804AB000873D4 /* RNAres.mm */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* ZLViewController.h */,
 				6003F5A6195388D20070C39A /* ZLViewController.m */,
@@ -179,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				D9AC1D5B8917323AA4FEBCDE /* RNBaseController.podspec */,
+				43B88FEC28D80BD6000873D4 /* react_native_pods.rb */,
 				2A409DB342284A7CDC54C0C4 /* README.md */,
 				512B79ED3426F00316C6BB97 /* LICENSE */,
 			);
@@ -207,7 +233,8 @@
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				2CCE412FAEF4A9ACBF68FF77 /* [CP] Embed Pods Frameworks */,
+				F5E8352FEE47043A8969395E /* [CP] Copy Pods Resources */,
+				4355F1EB28D4652100D7DA2C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -295,34 +322,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2CCE412FAEF4A9ACBF68FF77 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework",
-				"${BUILT_PRODUCTS_DIR}/Folly/folly.framework",
-				"${BUILT_PRODUCTS_DIR}/RNBaseController/RNBaseController.framework",
-				"${BUILT_PRODUCTS_DIR}/React/React.framework",
-				"${BUILT_PRODUCTS_DIR}/Yoga/yoga.framework",
-				"${BUILT_PRODUCTS_DIR}/glog/glog.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DoubleConversion.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/folly.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNBaseController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3C1CD0A56FEE11D5A6168C40 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -367,6 +366,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F5E8352FEE47043A8969395E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -374,7 +391,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6003F59E195388D20070C39A /* ZLAppDelegate.m in Sources */,
+				43B88FEB28D804AB000873D4 /* RNAres.mm in Sources */,
+				6003F59E195388D20070C39A /* ZLAppDelegate.mm in Sources */,
 				6003F5A7195388D20070C39A /* ZLViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
