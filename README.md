@@ -42,7 +42,8 @@ end
 
 新架构的版本请添加如下
 ```
-require_relative 'xx/react_native_pods'
+`curl -O https://raw.githubusercontent.com/RichieZhl/RNBaseController/master/react_native_pods.rb`
+require_relative './react_native_pods'
 
 target 'xxx' do
   use_react_native!(
