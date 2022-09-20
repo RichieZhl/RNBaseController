@@ -6,6 +6,7 @@
 //
 
 #import "RNBaseController.h"
+#import <CommonCrypto/CommonDigest.h>
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -24,11 +25,31 @@
 
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
+static inline NSString *getMd5Str(NSString *str) {
+    //传入参数,转化成char
+    const char *cStr = [str UTF8String];
+    //开辟一个16字节的空间
+    unsigned char result[16];
+    /*
+     extern unsigned char * CC_MD5(const void *data, CC_LONG len, unsigned char *md)官方封装好的加密方法
+     把str字符串转换成了32位的16进制数列（这个过程不可逆转） 存储到了md这个空间中
+     */
+    CC_MD5(cStr, (unsigned)strlen(cStr), result);
+    return [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+             result[0], result[1], result[2], result[3],
+             result[4], result[5], result[6], result[7],
+             result[8], result[9], result[10], result[11],
+             result[12], result[13], result[14], result[15]
+             ];
+}
+
 @interface RNBaseController () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {
     RCTTurboModuleManager *_turboModuleManager;
     RCTSurfacePresenterBridgeAdapter *_bridgeAdapter;
     std::shared_ptr<const facebook::react::ReactNativeConfig> _reactNativeConfig;
     facebook::react::ContextContainer::Shared _contextContainer;
+    
+    BOOL asyncDownload;
 }
 
 @property (nonatomic, strong) NSMutableString *resultString;
@@ -47,70 +68,89 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
 @end
 
+static NSString *rnbundleDir;
+
 @implementation RNBaseController
 
-#pragma mark - init
-- (instancetype)initWithUri:(NSString *)uri url:(NSURL *)url moduleName:(NSString *)moduleName properties:(NSDictionary *)properties useLocal:(BOOL)local {
-    if (self = [self initWithNibName:nil bundle:nil]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sourceLoadSuccess:) name:RCTBridgeDidDownloadScriptNotification object:nil];
-        
-        self.uri = uri;
-        self.moduleName = moduleName;
-        self.isSupportScanGun = NO;
-        self.finalUrl = local ? [self baseURL] : [self finalUrlWith:url];
-        self.p = [self privateLoadPropertiesWith:properties];
-        if (local) {
-            if (self.p == NULL) {
-                self.p = @{@"remote": url};
-            } else {
-                NSMutableDictionary *copy = self.p.mutableCopy;
-                copy[@"remote"] = url;
-                self.p = copy;
++ (void)initialize {
+    rnbundleDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"rnbundle"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDir = NO;
+    if (![fileManager fileExistsAtPath:rnbundleDir isDirectory:&isDir] || !isDir) {
+        NSError *createError = nil;
+        [fileManager createDirectoryAtPath:rnbundleDir withIntermediateDirectories:YES attributes:nil error:&createError];
+        if (createError != nil) {
+            createError = nil;
+            [fileManager createDirectoryAtPath:rnbundleDir withIntermediateDirectories:YES attributes:nil error:&createError];
+            if (createError != nil) {
+                abort();
             }
         }
     }
-    return self;
 }
 
-- (instancetype)initWitUrl:(NSURL *)url moduleName:(NSString *)moduleName properties:(NSDictionary *)properties launchOptions:(NSDictionary *)launchOptions {
-    if (self = [self initWithNibName:nil bundle:nil]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sourceLoadSuccess:) name:RCTBridgeDidDownloadScriptNotification object:nil];
-        
+#pragma mark - init
+- (instancetype)initWithUri:(NSString *)uri url:(NSURL *)url moduleName:(NSString *)moduleName properties:(NSDictionary *)properties launchOptions:(NSDictionary *)launchOptions {
+    if (self = [super initWithNibName:nil bundle:nil]) {
+        asyncDownload = NO;
+        self.uri = uri;
         self.moduleName = moduleName;
-        self.finalUrl = [self finalUrlWith:url];
-        self.isSupportScanGun = NO;
-        self.p = [self privateLoadPropertiesWith:properties];
         self.launchOptions = launchOptions;
+        self.isSupportScanGun = NO;
+        [self finalUrlWith:url];
+        self.p = [self privateLoadPropertiesWith:properties];
     }
     return self;
 }
 
-- (NSURL *)baseURL {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"ghost.ios" ofType:@"bundle"];
-    if (path == NULL) {
-        return NULL;
-    }
-    return [NSURL fileURLWithPath:path];
-}
-
-- (NSURL *)finalUrlWith:(NSURL *)url {
-    if (!self.needsCache) {
-        return url;
+- (void)finalUrlWith:(NSURL *)url {
+    if ([url.absoluteString containsString:@":8081"]) {
+        self.finalUrl = url;
+        return;
     }
     if ([self rnlocalPathExsit:url]) {
-        return [self rnlocalPath:url];
+        [self rnlocalPath:url];
     } else {
-        
+        asyncDownload = YES;
+        [self rnlocalPath:url];
+        [[[NSURLSession sharedSession] downloadTaskWithURL:url completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            if (error != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self handleDownloadError];
+                });
+                return;
+            }
+            NSError *copyError = nil;
+            [[NSFileManager defaultManager] copyItemAtURL:location toURL:self.finalUrl error:&copyError];
+            if (copyError == nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self loadRootView];
+                });
+                return;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self handleDownloadError];
+            });
+        }] resume];
     }
-    return url;
 }
 
-- (NSURL *)rnlocalPath:(NSURL *)url {
-    return NULL;
+- (UIView *)downloadAnimationView {
+    return nil;
+}
+
+- (void)handleDownloadError {
+    
+}
+
+- (void)rnlocalPath:(NSURL *)url {
+    NSString *bundlePath = [rnbundleDir stringByAppendingFormat:@"/%@.bundle", getMd5Str(url.absoluteString)];
+    self.finalUrl = [NSURL fileURLWithPath:bundlePath];
 }
 
 - (BOOL)rnlocalPathExsit:(NSURL *)url {
-    return NO;
+    NSString *bundlePath = [rnbundleDir stringByAppendingFormat:@"/%@.bundle", getMd5Str(url.absoluteString)];
+    return [[NSFileManager defaultManager] fileExistsAtPath:bundlePath];
 }
 
 - (void)setCommonPropertiesWith:(NSMutableDictionary *)properties {
@@ -139,23 +179,21 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
     return res;
 }
 
-- (void)sourceLoadSuccess:(NSNotification *)notif {
-    if ([notif.object isEqual:self.bridge]) {
-        RCTSource *source = notif.userInfo[RCTBridgeDidDownloadScriptNotificationSourceKey];
-        if ([self.finalUrl.absoluteString hasPrefix:@"http"] && ![self rnlocalPathExsit:self.finalUrl]) {
-            NSData *data = source.data;
-            if (data && [data isKindOfClass:[NSData class]]) {
-                if (self.needsCache && self.loadSourceBlock) {
-                    self.loadSourceBlock([data writeToURL:[self rnlocalPath:self.finalUrl] atomically:YES]);
-                }
-                return;
-            }
-            self.loadSourceBlock(NO);
-        }
+- (void)loadView {
+    if (!asyncDownload) {
+        [self loadRootView];
+        return;
+    }
+    
+    [super loadView];
+    
+    UIView *v = [self downloadAnimationView];
+    if (v != nil) {
+        [self.view addSubview:v];
     }
 }
 
-- (void)loadView {
+- (void)loadRootView {
     RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:self.launchOptions];
     _contextContainer = std::make_shared<facebook::react::ContextContainer const>();
     _reactNativeConfig = std::make_shared<facebook::react::EmptyReactNativeConfig const>();
@@ -216,10 +254,8 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
     _uri = nil;
     _finalUrl = nil;
     _resultString = nil;
-    _loadSourceBlock = nil;
     _launchOptions = nil;
     _moduleName = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     _bridgeAdapter = nil;
     _turboModuleManager = nil;
