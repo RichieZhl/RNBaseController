@@ -15,6 +15,8 @@
 
 @property (nonatomic, strong, readonly) NSDictionary *p; // 传入的属性
 
+@property (nonatomic, copy) void (^loadSourceBlock)(BOOL success); // 缓存完成回调，注：失败不回调
+
 /// 初始化方法
 /// @param uri  模块标记
 /// @param url url

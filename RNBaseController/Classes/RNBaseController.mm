@@ -123,6 +123,9 @@ static NSString *rnbundleDir;
             NSError *copyError = nil;
             [[NSFileManager defaultManager] copyItemAtURL:location toURL:self.finalUrl error:&copyError];
             if (copyError == nil) {
+                if (self.loadSourceBlock != nil) {
+                    self.loadSourceBlock(YES);
+                }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self loadRootView];
                 });
