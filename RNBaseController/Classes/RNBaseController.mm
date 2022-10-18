@@ -204,7 +204,7 @@ static NSString *rnbundleDir;
     _bridgeAdapter = [[RCTSurfacePresenterBridgeAdapter alloc] initWithBridge:bridge contextContainer:_contextContainer];
     bridge.surfacePresenter = _bridgeAdapter.surfacePresenter;
     
-    UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"AwesomeProject", self.p);
+    UIView *rootView = RCTAppSetupDefaultRootView(bridge, self.moduleName, self.p);
 
     if (@available(iOS 13.0, *)) {
       rootView.backgroundColor = [UIColor systemBackgroundColor];
