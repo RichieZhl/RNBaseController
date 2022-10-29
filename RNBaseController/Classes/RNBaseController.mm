@@ -260,11 +260,10 @@ static NSString *rnbundleDir;
     _launchOptions = nil;
     _moduleName = nil;
     
-    _bridgeAdapter = nil;
-    _turboModuleManager = nil;
-    _turboModuleManager = nil;
     _contextContainer.reset();
     _reactNativeConfig.reset();
+    _turboModuleManager = nil;
+    _bridgeAdapter = nil;
 }
 
 #pragma mark RCTCxxBridgeDelegate
