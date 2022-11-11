@@ -3,12 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4355F1E928D4652000D7DA2C /* hermes.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4355F1E828D4652000D7DA2C /* hermes.xcframework */; };
-		4355F1EA28D4652000D7DA2C /* hermes.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4355F1E828D4652000D7DA2C /* hermes.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		437D1351291E482900F2F612 /* business.ios.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 437D134F291E482900F2F612 /* business.ios.bundle */; };
+		437D1352291E482900F2F612 /* index.ios.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 437D1350291E482900F2F612 /* index.ios.bundle */; };
 		43B88FEB28D804AB000873D4 /* RNAres.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43B88FE928D804AB000873D4 /* RNAres.mm */; };
 		571B02FD10D7CF546726A39A /* libPods-RNBaseController_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88355E4677EAE6C6F0F1DAA0 /* libPods-RNBaseController_Tests.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -39,25 +39,13 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		4355F1EB28D4652100D7DA2C /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4355F1EA28D4652000D7DA2C /* hermes.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		1C04445954C6CEF10EFAA98E /* Pods-RNBaseController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBaseController_Example.release.xcconfig"; path = "Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example.release.xcconfig"; sourceTree = "<group>"; };
 		1D821C9C73837829BF02D17B /* Pods-RNBaseController_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNBaseController_Tests.debug.xcconfig"; path = "Target Support Files/Pods-RNBaseController_Tests/Pods-RNBaseController_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		2A409DB342284A7CDC54C0C4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		4355F1E828D4652000D7DA2C /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
+		437D134F291E482900F2F612 /* business.ios.bundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = business.ios.bundle; sourceTree = "<group>"; };
+		437D1350291E482900F2F612 /* index.ios.bundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = index.ios.bundle; sourceTree = "<group>"; };
 		43B88FE928D804AB000873D4 /* RNAres.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNAres.mm; sourceTree = "<group>"; };
 		43B88FEA28D804AB000873D4 /* RNAres.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNAres.h; sourceTree = "<group>"; };
 		43B88FEC28D80BD6000873D4 /* react_native_pods.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; name = react_native_pods.rb; path = ../react_native_pods.rb; sourceTree = "<group>"; };
@@ -99,7 +87,6 @@
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
 				BAEE40146E62274454AC2CF7 /* libPods-RNBaseController_Example.a in Frameworks */,
-				4355F1E928D4652000D7DA2C /* hermes.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +149,8 @@
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* ZLViewController.h */,
 				6003F5A6195388D20070C39A /* ZLViewController.m */,
+				437D134F291E482900F2F612 /* business.ios.bundle */,
+				437D1350291E482900F2F612 /* index.ios.bundle */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -234,7 +223,7 @@
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
 				F5E8352FEE47043A8969395E /* [CP] Copy Pods Resources */,
-				4355F1EB28D4652100D7DA2C /* Embed Frameworks */,
+				384E44F369F677E9C330597D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -307,6 +296,8 @@
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				437D1352291E482900F2F612 /* index.ios.bundle in Resources */,
+				437D1351291E482900F2F612 /* business.ios.bundle in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,6 +313,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		384E44F369F677E9C330597D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RNBaseController_Example/Pods-RNBaseController_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3C1CD0A56FEE11D5A6168C40 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

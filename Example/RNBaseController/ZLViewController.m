@@ -8,6 +8,7 @@
 
 #import "ZLViewController.h"
 #import "RNBaseController.h"
+#import "RNMetroSplitBundleController.h"
 
 @interface ZLViewController ()
 
@@ -31,9 +32,14 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesEnded:touches withEvent:event];
-    RNBaseController *viewController = [[RNBaseController alloc] initWithUri:@"main" url:[NSURL URLWithString: @"http://0.0.0.0:8081/index.bundle?platform=ios&dev=true&minify=false"] moduleName:@"AwesomeProject" properties:nil launchOptions:nil];
-    viewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    [self presentViewController:viewController animated:YES completion:nil];
+//    RNBaseController *viewController = [[RNBaseController alloc] initWithUri:@"main" url:[NSURL URLWithString: @"http://0.0.0.0:8081/index.bundle?platform=ios&dev=true&minify=false"] moduleName:@"AwesomeProject" properties:nil launchOptions:nil];
+//    viewController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+//    [self presentViewController:viewController animated:YES completion:nil];
+    
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"business.ios" ofType:@".bundle"];
+    RNMetroSplitBundleController *cvt = [[RNMetroSplitBundleController alloc] initWithUri:@"main" url:[NSURL fileURLWithPath:filepath] moduleName:@"AwesomeProject" properties:nil];
+    cvt.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    [self presentViewController:cvt animated:YES completion:nil];
 }
 
 @end

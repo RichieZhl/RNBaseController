@@ -8,6 +8,7 @@
 
 #import "ZLAppDelegate.h"
 #import <React/RCTAppSetupUtils.h>
+#import "RNMetroSplitBundleController.h"
 
 @implementation ZLAppDelegate
 
@@ -15,6 +16,9 @@
 {
     // Override point for customization after application launch.
     RCTAppSetupPrepareApp(application);
+    
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"index.ios" ofType:@".bundle"];
+    [[RNMetroSplitBundleManager sharedManager] initalManagerWithSplitEnabled:YES baseBundlePath:[NSURL fileURLWithPath:filepath]];
     return YES;
 }
 
