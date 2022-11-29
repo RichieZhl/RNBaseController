@@ -37,4 +37,8 @@
 /// 处理下载失败的情形
 - (void)handleDownloadError;
 
+/// 如果有压缩之类的情形，重写本函数，默认走GZIP解压缩，非GZIP则返回原始数据
+/// - Parameter data: 下载好的数据
+- (NSData *)handleDownloadedData:(NSData *)data;
+
 @end

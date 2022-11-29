@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RNBaseController'
-  s.version          = '0.2.2'
+  s.version          = '0.2.3'
   s.summary          = 'React Native 基础控制器'
 
   s.description      = <<-DESC

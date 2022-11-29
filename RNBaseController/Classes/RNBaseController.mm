@@ -22,6 +22,102 @@
 #import <ReactCommon/RCTTurboModuleManager.h>
 
 #import <react/config/ReactNativeConfig.h>
+#import <zlib.h>
+
+@interface NSData (gzip)
+
+- (nullable NSData *)gzippedDataWithCompressionLevel:(float)level;
+
+- (nullable NSData *)gzippedData;
+
+- (nullable NSData *)gunzippedData;
+
+- (BOOL)isGzippedData;
+
+@end
+
+@implementation NSData (gzip)
+
+- (NSData *)gzippedDataWithCompressionLevel:(float)level {
+    if (self.length == 0 || [self isGzippedData]) {
+        return self;
+    }
+
+    z_stream stream;
+    stream.zalloc = Z_NULL;
+    stream.zfree = Z_NULL;
+    stream.opaque = Z_NULL;
+    stream.avail_in = (uint)self.length;
+    stream.next_in = (Bytef *)(void *)self.bytes;
+    stream.total_out = 0;
+    stream.avail_out = 0;
+
+    static const NSUInteger ChunkSize = 16384;
+
+    NSMutableData *output = nil;
+    int compression = (level < 0.0f)? Z_DEFAULT_COMPRESSION: (int)(roundf(level * 9));
+    if (deflateInit2(&stream, compression, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY) == Z_OK) {
+        output = [NSMutableData dataWithLength:ChunkSize];
+        while (stream.avail_out == 0) {
+            if (stream.total_out >= output.length) {
+                output.length += ChunkSize;
+            }
+            stream.next_out = (uint8_t *)output.mutableBytes + stream.total_out;
+            stream.avail_out = (uInt)(output.length - stream.total_out);
+            deflate(&stream, Z_FINISH);
+        }
+        deflateEnd(&stream);
+        output.length = stream.total_out;
+    }
+
+    return output;
+}
+
+- (NSData *)gzippedData {
+    return [self gzippedDataWithCompressionLevel:-1.0f];
+}
+
+- (NSData *)gunzippedData {
+    if (self.length == 0 || ![self isGzippedData]) {
+        return self;
+    }
+
+    z_stream stream;
+    stream.zalloc = Z_NULL;
+    stream.zfree = Z_NULL;
+    stream.avail_in = (uint)self.length;
+    stream.next_in = (Bytef *)self.bytes;
+    stream.total_out = 0;
+    stream.avail_out = 0;
+
+    NSMutableData *output = nil;
+    if (inflateInit2(&stream, 47) == Z_OK) {
+        int status = Z_OK;
+        output = [NSMutableData dataWithCapacity:self.length * 2];
+        while (status == Z_OK) {
+            if (stream.total_out >= output.length) {
+                output.length += self.length / 2;
+            }
+            stream.next_out = (uint8_t *)output.mutableBytes + stream.total_out;
+            stream.avail_out = (uInt)(output.length - stream.total_out);
+            status = inflate (&stream, Z_SYNC_FLUSH);
+        }
+        if (inflateEnd(&stream) == Z_OK) {
+            if (status == Z_STREAM_END) {
+                output.length = stream.total_out;
+            }
+        }
+    }
+
+    return output;
+}
+
+- (BOOL)isGzippedData {
+    const UInt8 *bytes = (const UInt8 *)self.bytes;
+    return (self.length >= 2 && bytes[0] == 0x1f && bytes[1] == 0x8b);
+}
+
+@end
 
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
@@ -103,6 +199,10 @@ static NSString *rnbundleDir;
     return self;
 }
 
+- (NSData *)handleDownloadedData:(NSData *)data {
+    return [data gunzippedData];
+}
+
 - (void)finalUrlWith:(NSURL *)url {
     if ([url.absoluteString containsString:@":8081"]) {
         self.finalUrl = url;
@@ -113,26 +213,33 @@ static NSString *rnbundleDir;
     } else {
         asyncDownload = YES;
         [self rnlocalPath:url];
-        [[[NSURLSession sharedSession] downloadTaskWithURL:url completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            if (error != nil) {
+        [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            if (error != nil || data == nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self handleDownloadError];
                 });
                 return;
             }
-            NSError *copyError = nil;
-            [[NSFileManager defaultManager] copyItemAtURL:location toURL:self.finalUrl error:&copyError];
-            if (copyError == nil) {
-                if (self.loadSourceBlock != nil) {
-                    self.loadSourceBlock(YES);
-                }
+            
+            NSData *resultD = [self handleDownloadedData:data];
+            if (resultD == nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self loadRootView];
+                    [self handleDownloadError];
                 });
                 return;
             }
+            if (![resultD writeToURL:self.finalUrl atomically:YES]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self handleDownloadError];
+                });
+                return;
+            }
+            
+            if (self.loadSourceBlock != nil) {
+                self.loadSourceBlock(YES);
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self handleDownloadError];
+                [self loadRootView];
             });
         }] resume];
     }
