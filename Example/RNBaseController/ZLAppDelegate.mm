@@ -9,12 +9,22 @@
 #import "ZLAppDelegate.h"
 #import <React/RCTAppSetupUtils.h>
 #import "RNMetroSplitBundleController.h"
+#import <React/RCTThirdPartyFabricComponentsProviderRegister.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+Class RNCSafeAreaProviderCls(void); // 如加入react-native-safe-area-context，写上这个
+#ifdef __cplusplus
+}
+#endif
 
 @implementation ZLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    RCTThirdPartyFabricComponentsProviderRegister("RNCSafeAreaProvider", RNCSafeAreaProviderCls); // 注册
     RCTAppSetupPrepareApp(application);
     
     NSString *filepath = [[NSBundle mainBundle] pathForResource:@"index.ios" ofType:@".bundle"];
