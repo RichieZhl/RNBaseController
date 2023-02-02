@@ -25,7 +25,7 @@ Class RNCSafeAreaProviderCls(void); // 如加入react-native-safe-area-context�
 {
     // Override point for customization after application launch.
     RCTThirdPartyFabricComponentsProviderRegister("RNCSafeAreaProvider", RNCSafeAreaProviderCls); // 注册
-    RCTAppSetupPrepareApp(application);
+    RCTAppSetupPrepareApp(application, YES);
     
     NSString *filepath = [[NSBundle mainBundle] pathForResource:@"index.ios" ofType:@".bundle"];
     [[RNMetroSplitBundleManager sharedManager] initalManagerWithSplitEnabled:YES baseBundlePath:[NSURL fileURLWithPath:filepath]];

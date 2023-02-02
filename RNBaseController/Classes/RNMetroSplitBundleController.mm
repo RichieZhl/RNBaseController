@@ -180,7 +180,7 @@ static RNMetroSplitBundleManager *manager = nil;
     RCTBridge *bridge = [RNMetroSplitBundleManager sharedManager].sharedBridge;
     NSData *data = [NSData dataWithContentsOfURL:self.url];
     [bridge.batchedBridge executeSourceCode:data sync:NO];
-    UIView *rootView = RCTAppSetupDefaultRootView(bridge, self.moduleName, self.p);
+    UIView *rootView = RCTAppSetupDefaultRootView(bridge, self.moduleName, self.p, YES);
 
     if (@available(iOS 13.0, *)) {
       rootView.backgroundColor = [UIColor systemBackgroundColor];

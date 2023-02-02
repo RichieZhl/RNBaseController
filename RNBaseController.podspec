@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RNBaseController'
-  s.version          = '0.2.3'
+  s.version          = '0.3.0'
   s.summary          = 'React Native 基础控制器'
 
   s.description      = <<-DESC
@@ -26,7 +26,7 @@ React Native 基础控制器，并支持metro 分包
   s.ios.deployment_target = '12.4'
   
   s.pod_target_xcconfig = { "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/boost\" \"$(PODS_ROOT)/RCT-Folly\" \"$(PODS_ROOT)/DoubleConversion\" \"$(PODS_ROOT)/React\"  \"$(PODS_ROOT)/React/ReactCommon\" \"$(PODS_ROOT)/React/React\"",
-      "CLANG_CXX_LANGUAGE_STANDARD" => "c++17" }
+      "CLANG_CXX_LANGUAGE_STANDARD" => "c++17", "OTHER_CPLUSPLUSFLAGS" => "$(inherited) -DRCT_NEW_ARCH_ENABLED=1" }
   s.user_target_xcconfig = { "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/React\"" }
     
   s.source_files = 'RNBaseController/Classes/*.{h,m,mm}'

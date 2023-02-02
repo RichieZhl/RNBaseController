@@ -23,7 +23,14 @@ pod 'RNBaseController'
 ## version
 ```
 0.1.x 支持非新架构的React Native版本
->= 0.2.0 支持新架构的React Native版本
+0.2.x 支持新架构的React Native版本 0.70.x
+>= 0.3.0 支持新架构的React Native版本 0.71.x
+```
+
+## bugs
+```
+0.3.x 自行创建embed pod framework
+见demo.sh
 ```
 
 React Native 基础控制器
